@@ -1,7 +1,6 @@
 package com.simu.mleap.train.server
 
 import java.io.File
-import java.time.format.DateTimeFormatter
 
 import com.simu.mleap.train.server.support._
 import ml.combust.bundle.BundleFile
@@ -17,6 +16,8 @@ import scala.util.{Failure, Success, Try}
 
 class MleapService()(implicit ec: ExecutionContext) {
   private var bundle: Option[Bundle[Transformer]] = None
+
+  // TODO : cache or db access mock
   private val items = Source.fromFile("/tmp/items.csv")
     .getLines.drop(1)
     .map(_.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)"))
@@ -39,9 +40,9 @@ class MleapService()(implicit ec: ExecutionContext) {
   }.flatMap(r => Future.fromTry(r)).andThen {
     case Success(b) =>
       setBundle(b)
-      println("loaded with success")
+      println("Model loaded with success")
     case Failure(f) =>
-      println("faillure")
+      println("Model loading failed")
       f.printStackTrace()
   }.map(_ => LoadModelResponse())
 
