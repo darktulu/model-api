@@ -3,9 +3,6 @@ package com.simu.mleap.train.server.marshalling
 import akka.http.scaladsl.model.MediaType.NotCompressible
 import akka.http.scaladsl.model.{ContentType, MediaType}
 
-/**
-  * Created by hollinwilkins on 1/30/17.
-  */
 object MediaTypes {
   val `application/binary` = MediaType.customBinary("application", "binary", NotCompressible)
   val `application/avro` = MediaType.customBinary("application", "avro", NotCompressible)

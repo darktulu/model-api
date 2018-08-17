@@ -1,25 +1,17 @@
-name := "mleap-demo"
+name := "model-training"
 scalaVersion := "2.11.12"
 
-import sbtassembly.MergeStrategy
+val sparkVersion = "2.3.1"
+val mleapVersion = "0.10.3"
+val akkaStreamVersion = "2.4.2"
 
-lazy val assemblySettings = Seq(
-  assemblyJarName in assembly := name.value + ".jar",
-  assemblyMergeStrategy in assembly := {
-    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case _                             => MergeStrategy.first
-  })
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case _ => MergeStrategy.first
+}
 
-lazy val `demo` = project.in(file("demo"))
-  .settings(
-    Common.settings,
-    assemblySettings,
-    libraryDependencies ++= Dependencies.trainingDependencies
-  )
-
-lazy val `server` = project.in(file("server"))
-  .settings(
-    Common.settings,
-    assemblySettings,
-    libraryDependencies ++= Dependencies.serverDependencies
-  )
+libraryDependencies ++= Seq(
+  "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "provided",
+  "ml.combust.mleap" %% "mleap-spark" % mleapVersion)

@@ -4,13 +4,9 @@ import akka.actor.{ExtendedActorSystem, Extension, ExtensionId, ExtensionIdProvi
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import com.truecar.mleap.demo.server.support.LoadModelRequest
+import com.simu.mleap.train.server.support.LoadModelRequest
 import com.typesafe.config.Config
 
-
-/**
-  * Created by hollinwilkins on 1/30/17.
-  */
 object MleapServer extends ExtensionId[MleapServer]
   with ExtensionIdProvider {
   override def createExtension(system: ExtendedActorSystem): MleapServer = {

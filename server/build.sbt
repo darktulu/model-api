@@ -1,4 +1,4 @@
-name := "mleap-demo"
+name := "model-api"
 scalaVersion := "2.11.12"
 
 val sparkVersion = "2.3.1"
@@ -11,7 +11,7 @@ assemblyMergeStrategy in assembly := {
 }
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
-  "org.apache.spark" %% "spark-catalyst" % sparkVersion % "provided",
-  "ml.combust.mleap" %% "mleap-spark" % mleapVersion)
+  "ml.combust.mleap" %% "mleap-runtime" % mleapVersion,
+  "com.typesafe.akka" %% "akka-http-core" % akkaStreamVersion,
+  "com.typesafe.akka" %% "akka-http-experimental" % akkaStreamVersion,
+  "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaStreamVersion)

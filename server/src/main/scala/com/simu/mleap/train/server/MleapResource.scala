@@ -7,10 +7,10 @@ import akka.http.scaladsl.model.{HttpRequest, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.directives.LoggingMagnet
 import akka.http.scaladsl.server.{ExceptionHandler, Route, RouteResult}
+import com.simu.mleap.train.server.marshalling.ApiMarshalling._
+import com.simu.mleap.train.server.marshalling.LeapFrameMarshalling._
+import com.simu.mleap.train.server.support.{LoadModelRequest, ModelRequest, UnloadModelRequest}
 
-/**
-  * Created by hollinwilkins on 1/30/17.
-  */
 class MleapResource(service: MleapService)
                    (implicit system: ActorSystem) {
   private def recordLog(logger: LoggingAdapter, level: LogLevel)(req: HttpRequest)(res: RouteResult): Unit = res match {
@@ -34,8 +34,7 @@ class MleapResource(service: MleapService)
         path("model") {
           put {
             entity(as[LoadModelRequest]) {
-              request =>
-                complete(service.loadModel(request))
+              request => complete(service.loadModel(request))
             }
           } ~ delete {
             complete(service.unloadModel(UnloadModelRequest()))

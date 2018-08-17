@@ -13,9 +13,6 @@ import spray.json._
 
 import scala.language.implicitConversions
 
-/**
-  * Created by hollinwilkins on 1/30/17.
-  */
 trait LeapFrameMarshalling {
   implicit val combustLeapFrameUnmarshaller: FromEntityUnmarshaller[DefaultLeapFrame] = {
     Unmarshaller.firstOf(createUnmarshaller(ContentTypes.`application/binary`),

@@ -2,7 +2,6 @@ package com.simu.mleap.train.server
 
 import java.io.File
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDate, Month}
 
 import com.simu.mleap.train.server.support._
 import ml.combust.bundle.BundleFile
@@ -18,7 +17,6 @@ import scala.util.{Failure, Success, Try}
 
 class MleapService()(implicit ec: ExecutionContext) {
   private var bundle: Option[Bundle[Transformer]] = None
-  private val format = DateTimeFormatter.ofPattern("dd-MM-yyyy")
   private val items = Source.fromFile("/tmp/items.csv")
     .getLines.drop(1)
     .map(_.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)"))
@@ -60,8 +58,6 @@ class MleapService()(implicit ec: ExecutionContext) {
       StructField("item_category_id", ScalarType.Long),
       StructField("item_price", ScalarType.Double),
       StructField("date_block_num", ScalarType.Int)).get
-
-    val accessor = format.parse(frame.dateDay)
 
     val dataset = Seq(Row(
       frame.shopId,

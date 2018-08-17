@@ -5,3 +5,5 @@ derby.log
 metastore_db/
 *.iml
 .ipynb_checkpoints/
+project/project
+project/target
